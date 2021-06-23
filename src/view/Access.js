@@ -1,89 +1,152 @@
-import React, { useCallback } from "react";
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import React, { Component } from "react";
+import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, SafeAreaView, FlatList, Alert } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Header from "../components/header";
 
-export default Access = () => {
-  const state = {
-    MyTextInput: '',
-    user: ['Jon', 'James']
-  }
+let user = [
+  {
+    id: 1,
+    name: "Luca",
+    access: "no"
+  },
+  {
+    id: 2,
+    name: "Julian",
+    access: "no"
+  },
+  {
+    id: 3,
+    name: "Mark",
+    access: "no"
+  },
+];
 
-  // const onChangeInput = (event) => {
-  //   setState({
-  //     MyTextInput: event
-  //   })
-  // }
+function Item({ id, name, access }) {
+  const onPress = (id) => {
+    const users = user.find((u) => {
+      return u.id === id;
+    });
+    const updateUser = (id, name) => {
+      const updatedUser = {
+        id,
+        name: name,
+        acces,
+      },
+        users = users.map(u =>
+          u.id === id ? { ...u, ...updateUser } : u
+        );
 
-  const onAddUser = () => {
-    alert("add new user")
-    // setState(prevState => {
-    //   return {
-    //     MyTextInput: '',
-    //     users: [...prevState.users.prevState.MyTextInput]
-    //   }
-    // })
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "access" }]
+      })
+    };
 
-  }
+    Alert.prompt("Update User", `Updating User ${id}`, [
+      {
+        text: "Update",
+        onPress: (text) => { }
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+        onPress: () => console.log("Cancelled")
+      }
+    ])
+
+  };
 
   return (
-    <View>
-      <Header />
-      <View style={styles.body}>
+    <TouchableOpacity
+      onPress={() => onPress(id)}
+      style={styles.listItem}
+    >
+      <Text style={styles.listName}>{name}</Text>
+      <Text style={styles.listAccess} >{access}</Text>
+    </TouchableOpacity>
+  )
+}
 
-        <TouchableOpacity
-          onPress={onAddUser}
-          style={styles.button}
-        >
-          <Entypo name="add-user" size={28} color={'grey'} />
-        </TouchableOpacity>
+
+export default class Access extends Component {
+
+  state = {
+    name: "",
+    access: ""
+  };
+
+  AddUser = () => {
+    const { name, access } = this.state;
+    if (name && access) {
+      user.push({
+        id: user[user.length - 1].id + 1,
+        name: name,
+        access: access
+      });
+      this.props.navigation.reset({
+        index: 0,
+        routes: [{ name: "access" }],
+      })
+    }
+    else {
+      alert("Error", "Fields must not be empty!");
+    }
+  }
+
+
+  render() {
+    return (
+      <View>
+        <Header />
+
+        <View style={styles.body}>
+
+          <TouchableOpacity
+            //onPress={onAddUser}
+            style={styles.button}
+          >
+            <Entypo name="add-user" size={28} color={'grey'} />
+          </TouchableOpacity>
+
+        </View>
+
+        <View >
+          <FlatList style={styles.users} data={user} renderItem={({ item }) => (
+            <Item id={item.id} name={item.name} />
+          )} />
+        </View>
+
+        {/* <View style={{ alignItems: "center" }}>
+          <Text> Add New User</Text>
+          <TextInput
+            placeholder={"User Name"}
+            style={styles.input}
+            onChangeText={(text) => this.setState({ name: text })}
+          />
+          <TextInput
+            placeholder={"User Access"}
+            style={styles.input}
+            onChangeText={(text) => this.setState({ access: text })}
+          />
+
+          <TouchableOpacity onPress={() => this.AddUser()}>
+            <Text> Add User</Text>
+          </TouchableOpacity>
+        </View>
+ */}
+
+
 
       </View>
 
-      <View style={styles.usersView}>
-        <TouchableOpacity>
-          {
-            state.user.map(item => (
-              <Text style={styles.users} key={item}> {item} </Text>
-            ))
-          }
-        </TouchableOpacity>
-      </View>
-
-      {/* <TextInput
-        value={state.MyTextInput}
-        onChangeText={onChangeInput}
-        style={styles.input}
-      /> */}
 
 
 
-
-    </View>
-
-
-
-
-  );
+    );
+  }
 };
 
 const styles = StyleSheet.create({
-
-
-  usersView: {
-    marginBottom: 100
-  },
-
-  users: {
-    fontSize: 20,
-    borderWidth: 0.2,
-    borderRadius: 10,
-    borderColor: 'grey',
-    padding: 10,
-    marginBottom: 20
-
-
-  },
 
   body: {
     marginLeft: '78%',
@@ -103,6 +166,43 @@ const styles = StyleSheet.create({
     shadowColor: 'deepskyblue',
     elevation: 10
   },
+
+  input: {
+    width: 250,
+    borderWidth: 1,
+    flexDirection: "row",
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 20,
+    borderColor: "skyblue",
+    textAlign: "center"
+
+  },
+
+  listItem: {
+    marginLeft: 30,
+    width: 300,
+    flexDirection: "row",
+    marginVertical: 15,
+    padding: 15,
+    elevation: 10,
+    borderRadius: 20,
+    borderColor: "deepskyblue",
+    backgroundColor: 'white',
+    shadowColor: 'deepskyblue',
+  },
+  listName: {
+    flex: 0.2,
+    textAlign: "center",
+    alignItems: "flex-start",
+  },
+
+  listAccess: {
+    flex: 0.2,
+    textAlign: "center",
+    alignItems: "flex-end",
+  },
+
 
 
 
