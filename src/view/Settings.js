@@ -1,15 +1,14 @@
-import React, { useState, useCallback } from "react";
-import { View, Text, StyleSheet, Modal, Button, Pressable } from 'react-native';
+import React, { useCallback } from "react";
+import { View, Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { DataTable } from 'react-native-paper';
 import DocumentPicker from 'react-native-document-picker';
 
 import Header from "../components/header";
 
 
-
-
 export default Settings = () => {
-  const [BackupModalVisible, setBackupModalVisible] = useState(false);
 
   //select file 
   const pickFile = useCallback(async () => {
@@ -31,94 +30,70 @@ export default Settings = () => {
 
     <View >
       <Header />
-      <DataTable style={styles.content}>
-        <DataTable.Header style={styles.tableHeader}>
+      <View style={styles.body}>
+        <TouchableOpacity
+          style={styles.buttonAddDevices}
+        >
+          <Entypo name="add-to-list" size={28} color={'grey'} />
+        </TouchableOpacity>
+      </View>
+
+
+      <DataTable >
+        <DataTable.Header >
           <DataTable.Title >Devices</DataTable.Title>
         </DataTable.Header>
 
         <DataTable.Row>
           <DataTable.Cell >Front door</DataTable.Cell>
-          <DataTable.Cell numeric>...</DataTable.Cell>
+          <DataTable.Cell numeric>
+            <AntDesign name="ellipsis1" size={25} style={styles.icon} color={'grey'} />
+          </DataTable.Cell>
         </DataTable.Row>
 
         <DataTable.Row>
           <DataTable.Cell>Garden door</DataTable.Cell>
-          <DataTable.Cell numeric>...</DataTable.Cell>
+          <DataTable.Cell numeric>
+            <AntDesign name="ellipsis1" size={25} style={styles.icon} color={'grey'} />
+          </DataTable.Cell>
         </DataTable.Row>
 
       </DataTable>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={BackupModalVisible}
-        onRequestClose={() => { setBackupModalVisible(!BackupModalVisible); }
-        }
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Button
-              title="Select Document"
-              onPress={pickFile}
-
-            />
-            <Text style={styles.modalText}>...........</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setBackupModalVisible(!BackupModalVisible)}
-            >
-              <Text style={styles.textStyle}>Close</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-
       <View>
         <Pressable style={styles.button}
-          onPress={() => setBackupModalVisible(true)}  >
-          <Text style={styles.textModal}> Back up</Text>
+          onPress={pickFile} >
+          <Text style={styles.textButton}> Back up</Text>
         </Pressable>
         <Text style={styles.text}> Make a back up of your credentials  </Text>
       </View>
-
-
     </View>
-
-
 
   );
 };
 
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: 30
-  },
-  tableHeader: {
-    fontSize: 40
 
+  body: {
+    marginLeft: '78%',
+    marginTop: 25,
+    height: '12%'
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
+
+  buttonAddDevices: {
+    marginBottom: 350,
+    width: 55,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    borderColor: "deepskyblue",
+    backgroundColor: 'white',
+    shadowColor: 'deepskyblue',
+    elevation: 10
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 40,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
+
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -133,15 +108,16 @@ const styles = StyleSheet.create({
     marginTop: 190,
     marginLeft: 40
   },
+
   text: {
     marginLeft: 45,
     marginTop: 10,
     fontSize: 16
   },
-  textModal: {
+
+  textButton: {
     fontSize: 20,
     fontWeight: 'bold',
     color: "grey"
-
   }
 });

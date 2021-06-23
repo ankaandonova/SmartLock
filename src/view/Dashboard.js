@@ -80,12 +80,12 @@ export default Dashboard = () => {
 
 
 const styles = StyleSheet.create({
-
   pickerValue: {
     height: 20,
-    width: 200,
+    width: 170,
     elevation: 10,
-
+    marginTop: 20,
+    marginLeft: 50,
   },
 
   picker: {
@@ -93,8 +93,6 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 5,
     alignItems: "center",
-
-
   },
 
   modal: {
@@ -131,12 +129,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
+
   textValue: {
-    fontSize: 20
+    fontSize: 20,
   },
-
 
   text: {
     marginTop: 30,
@@ -144,7 +141,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-
-
 
 });

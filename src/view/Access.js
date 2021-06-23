@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, SafeAreaView, FlatList, Alert } from 'react-native';
+import React, { Component, Us } from "react";
+import { View, Text, TextInput, Modal, TouchableOpacity, Button, StyleSheet, SafeAreaView, FlatList, Alert } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Header from "../components/header";
 
@@ -61,8 +61,8 @@ function Item({ id, name, access }) {
       onPress={() => onPress(id)}
       style={styles.listItem}
     >
+      <Entypo name="user" size={25} style={styles.icon} color={'grey'} />
       <Text style={styles.listName}>{name}</Text>
-      <Text style={styles.listAccess} >{access}</Text>
     </TouchableOpacity>
   )
 }
@@ -95,6 +95,7 @@ export default class Access extends Component {
 
 
   render() {
+
     return (
       <View>
         <Header />
@@ -102,7 +103,7 @@ export default class Access extends Component {
         <View style={styles.body}>
 
           <TouchableOpacity
-            //onPress={onAddUser}
+            // onPress={AddUser}
             style={styles.button}
           >
             <Entypo name="add-user" size={28} color={'grey'} />
@@ -111,6 +112,8 @@ export default class Access extends Component {
         </View>
 
         <View >
+
+
           <FlatList style={styles.users} data={user} renderItem={({ item }) => (
             <Item id={item.id} name={item.name} />
           )} />
@@ -132,15 +135,11 @@ export default class Access extends Component {
           <TouchableOpacity onPress={() => this.AddUser()}>
             <Text> Add User</Text>
           </TouchableOpacity>
-        </View>
- */}
+        </View> */}
 
 
 
       </View>
-
-
-
 
     );
   }
@@ -191,13 +190,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     shadowColor: 'deepskyblue',
   },
-  listName: {
+  icon: {
     flex: 0.2,
     textAlign: "center",
     alignItems: "flex-start",
   },
 
-  listAccess: {
+  listName: {
     flex: 0.2,
     textAlign: "center",
     alignItems: "flex-end",
