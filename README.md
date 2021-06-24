@@ -15,7 +15,8 @@ This project is made for Animo Solutions to demonstrate the Smart Lock Wallet Ap
  ## How to run
  
  #### Requirements
- 
+ Please be sure to have an emulator installed (Android Studio) or use your mobile device.
+ To prepare your device follow the link below: https://reactnative.dev/docs/running-on-device
  
  
 #### Run on Android devices
